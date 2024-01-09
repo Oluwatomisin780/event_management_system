@@ -4,9 +4,7 @@ import { TicketType } from '@prisma/client';
 @ObjectType()
 export class Ticket {
   @Field(() => Int)
-  id: number;
-  @Field(() => Int)
-  price: number;
+  price?: number;
   @Field()
-  ticketType: TicketType;
+  ticketType?: TicketType;
 }

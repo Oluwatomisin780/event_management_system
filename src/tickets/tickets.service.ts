@@ -1,26 +1,56 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTicketInput } from './dto/create-ticket.input';
 import { UpdateTicketInput } from './dto/update-ticket.input';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class TicketsService {
+  constructor(private prismaService: PrismaService) {}
+  //check if user is oauthorize later
   create(createTicketInput: CreateTicketInput) {
-    return 'This action adds a new ticket';
+    return this.prismaService.ticket.create({
+      data: {
+        ...createTicketInput,
+        eventId: 1,
+      },
+    });
   }
 
   findAll() {
-    return `This action returns all tickets`;
+    return this.prismaService.ticket.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} ticket`;
+  async findOne(id: number) {
+    const ticket = await this.prismaService.ticket.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!ticket) throw new NotFoundException('ticket does not exist');
+    return ticket;
   }
 
-  update(id: number, updateTicketInput: UpdateTicketInput) {
-    return `This action updates a #${id} ticket`;
+  async update(id: number, updateTicketInput: UpdateTicketInput) {
+    const ticket = await this.findOne(id);
+    if (!ticket) throw new NotFoundException('ticket does not exist');
+    //check organizer id later hare
+
+    return this.prismaService.ticket.update({
+      where: {
+        id,
+      },
+      data: {
+        ...updateTicketInput,
+      },
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} ticket`;
+  async remove(id: number) {
+    const ticket = await this.findOne(id);
+    if (!ticket) throw new NotFoundException('ticket does not exist');
+    //check organizer id later hare
+    return this.prismaService.ticket.delete({
+      where: { id },
+    });
   }
 }
