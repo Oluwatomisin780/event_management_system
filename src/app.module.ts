@@ -17,6 +17,7 @@ import { TicketsModule } from './tickets/tickets.module';
       playground: false,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      introspection: true,
     }),
     UsersModule,
     EventsModule,
