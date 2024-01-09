@@ -1,0 +1,91 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: Int!
+  name: String!
+  email: String!
+  password: String!
+}
+
+type Event {
+  """Example field (placeholder)"""
+  id: Int!
+  name: String!
+  description: String!
+  date: String!
+  location: String!
+}
+
+type Ticket {
+  id: Int!
+  price: Int!
+  ticketType: String!
+}
+
+type Query {
+  users: [User!]!
+  user(id: Int!): User!
+  events: [Event!]!
+  event(id: Int!): Event!
+  tickets: [Ticket!]!
+  ticket(id: Int!): Ticket!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
+  createEvent(createEventInput: CreateEventInput!): Event!
+  updateEvent(updateEventInput: UpdateEventInput!): Event!
+  removeEvent(id: Int!): Event!
+  createTicket(createTicketInput: CreateTicketInput!): Ticket!
+  updateTicket(updateTicketInput: UpdateTicketInput!): Ticket!
+  removeTicket(id: Int!): Ticket!
+}
+
+input CreateUserInput {
+  """Example field (placeholder)"""
+  id: Int!
+  email: String!
+  password: String!
+  name: String!
+}
+
+input UpdateUserInput {
+  id: Int!
+  email: String
+  password: String
+  name: String
+}
+
+input CreateEventInput {
+  """Example field (placeholder)"""
+  id: Int!
+  name: String!
+  description: String!
+  date: String!
+  location: String!
+}
+
+input UpdateEventInput {
+  """Example field (placeholder)"""
+  id: Int
+  name: String!
+  description: String!
+  date: String!
+  location: String!
+}
+
+input CreateTicketInput {
+  id: Int!
+  price: Int!
+  ticketType: String!
+}
+
+input UpdateTicketInput {
+  id: Int!
+  price: Int
+  ticketType: String
+}
