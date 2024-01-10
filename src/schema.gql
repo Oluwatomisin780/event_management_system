@@ -6,27 +6,28 @@ type User {
   id: Int!
   name: String!
   email: String!
-  password: String!
+  userType: String!
 }
 
 type Event {
-  """Example field (placeholder)"""
   id: Int!
   name: String!
   description: String!
-  date: String!
   location: String!
 }
 
 type Ticket {
-  id: Int!
   price: Int!
   ticketType: String!
 }
 
+type LoginResponse {
+  access_token: String!
+  user: User!
+}
+
 type Query {
-  users: [User!]!
-  user(id: Int!): User!
+  user(email: String!): User!
   events: [Event!]!
   event(id: Int!): Event!
   tickets: [Ticket!]!
@@ -35,57 +36,50 @@ type Query {
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
-  updateUser(updateUserInput: UpdateUserInput!): User!
-  removeUser(id: Int!): User!
   createEvent(createEventInput: CreateEventInput!): Event!
   updateEvent(updateEventInput: UpdateEventInput!): Event!
   removeEvent(id: Int!): Event!
   createTicket(createTicketInput: CreateTicketInput!): Ticket!
   updateTicket(updateTicketInput: UpdateTicketInput!): Ticket!
   removeTicket(id: Int!): Ticket!
+  login(loginUserInput: LoginUserInput!): LoginResponse!
+  signup(loginUserInput: CreateUserInput!): User!
 }
 
 input CreateUserInput {
-  """Example field (placeholder)"""
-  id: Int!
   email: String!
   password: String!
   name: String!
-}
-
-input UpdateUserInput {
-  id: Int!
-  email: String
-  password: String
-  name: String
+  userType: String!
 }
 
 input CreateEventInput {
-  """Example field (placeholder)"""
-  id: Int!
   name: String!
   description: String!
-  date: String!
   location: String!
 }
 
 input UpdateEventInput {
-  """Example field (placeholder)"""
-  id: Int
   name: String!
   description: String!
-  date: String!
   location: String!
+
+  """Example field (placeholder)"""
+  id: Int!
 }
 
 input CreateTicketInput {
-  id: Int!
   price: Int!
   ticketType: String!
 }
 
 input UpdateTicketInput {
-  id: Int!
   price: Int
   ticketType: String
+  id: Int!
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
 }
