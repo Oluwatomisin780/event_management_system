@@ -43,7 +43,7 @@ type Mutation {
   updateTicket(updateTicketInput: UpdateTicketInput!): Ticket!
   removeTicket(id: Int!): Ticket!
   login(loginUserInput: LoginUserInput!): LoginResponse!
-  signup(loginUserInput: CreateUserInput!): User!
+  signup(createUserInput: CreateUserInput!): User!
 }
 
 input CreateUserInput {

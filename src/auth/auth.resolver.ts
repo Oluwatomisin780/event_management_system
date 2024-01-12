@@ -11,16 +11,13 @@ import { User } from '../users/entities/user.entity';
 @Resolver()
 export class AuthResolver {
   constructor(private authService: AuthService) {}
-  @Mutation(() => LoginResponse)
   @UseGuards(GqlAuthGuard)
-  login(
-    @Args('loginUserInput') loginUserInput: LoginUserInput,
-    @Context() context,
-  ) {
-    return this.authService.login(context.user);
+  @Mutation(() => LoginResponse)
+  login(@Args('loginUserInput') loginUserInput: LoginUserInput) {
+    return this.authService.login(loginUserInput);
   }
   @Mutation(() => User)
-  async signup(@Args('loginUserInput') createUserInput: CreateUserInput) {
-    const user = await this.authService.SignUp(createUserInput);
+  async signup(@Args('createUserInput') createUserInput: CreateUserInput) {
+    return this.authService.SignUp(createUserInput);
   }
 }

@@ -12,6 +12,8 @@ import {
   CreateUserInput,
   LoginUserInput,
 } from '../users/dto/create-user.input';
+import passport from 'passport';
+//import { use } from 'passport';
 
 @Injectable()
 export class AuthService {
@@ -32,6 +34,8 @@ export class AuthService {
 
   async login(user: LoginUserInput) {
     const emailExist = await this.userService.findOne(user.email);
+    if (!emailExist)
+      throw new BadRequestException(`user with ${emailExist} does not exist`);
     return {
       access_token: this.jwtService.sign({
         email: user.email,
@@ -40,16 +44,17 @@ export class AuthService {
     };
   }
 
-  async SignUp(user: CreateUserInput) {
-    user = await this.userService.findOne(user.email);
-    if (user)
+  async SignUp(createUserInput: CreateUserInput) {
+    const user = await this.userService.findOne(createUserInput.email);
+    if (user) {
       throw new BadRequestException(`user with ${user.email} already exist!!`);
-
+    }
+    const password = await bcrypt.hash(createUserInput.password, 12);
     return this.userService.create({
-      userType: user.userType,
-      name: user.name,
-      email: user.email,
-      password: user.password,
+      password: password,
+      name: createUserInput.name,
+      userType: createUserInput.userType,
+      email: createUserInput.email,
     });
   }
 }
