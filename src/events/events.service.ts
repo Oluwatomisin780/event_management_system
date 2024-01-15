@@ -3,14 +3,16 @@ import { CreateEventInput } from './dto/create-event.input';
 import { UpdateEventInput } from './dto/update-event.input';
 import { PrismaService } from '../prisma/prisma.service';
 import e from 'express';
+import { User } from '../users/entities/user.entity';
+import { CurrentUser } from '../auth/jwt-auth.guard';
 @Injectable()
 export class EventsService {
   constructor(private prismaService: PrismaService) {}
-  create(createEventInput: CreateEventInput) {
+  create(createEventInput: CreateEventInput, user_id: number) {
     return this.prismaService.event.create({
       data: {
         ...createEventInput,
-        organizer_id: 1,
+        organizer_id: user_id,
       },
     });
   }

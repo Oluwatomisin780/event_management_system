@@ -7,4 +7,6 @@ export class CreateTicketInput {
   price: number;
   @Field()
   ticketType: TicketType;
+  @Field(() => Int)
+  eventId: number;
 }

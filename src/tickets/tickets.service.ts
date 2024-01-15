@@ -11,7 +11,6 @@ export class TicketsService {
     return this.prismaService.ticket.create({
       data: {
         ...createTicketInput,
-        eventId: 2,
       },
     });
   }

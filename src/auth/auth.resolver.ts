@@ -13,12 +13,12 @@ import { UseGuards } from '@nestjs/common';
 export class AuthResolver {
   constructor(private authService: AuthService) {}
   @Mutation(() => LoginResponse)
-  @UseGuards(GqlAuthGuard)
+  // @UseGuards(GqlAuthGuard)
   async login(
     @Args('loginUserInput') loginUserInput: LoginUserInput,
     @Context() context,
   ) {
-    return this.authService.login(context.user);
+    return this.authService.login(loginUserInput);
   }
   @Mutation(() => User)
   async signup(@Args('createUserInput') createUserInput: CreateUserInput) {

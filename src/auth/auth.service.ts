@@ -8,7 +8,6 @@ import {
   CreateUserInput,
   LoginUserInput,
 } from '../users/dto/create-user.input';
-import { User } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -27,14 +26,14 @@ export class AuthService {
     throw new BadRequestException('Invalid user credentials');
   }
 
-  async login(user: User) {
-    // const emailExist = await this.userService.findOne(user.email);
-    // if (!emailExist)
-    //   throw new BadRequestException(`user with ${user.email} does not exist`);
+  async login(user: LoginUserInput) {
+    const emailExist = await this.userService.findOne(user.email);
+    if (!emailExist)
+      throw new BadRequestException(`user with ${user.email} does not exist`);
     return {
       access_token: this.jwtService.sign({
         email: user.email,
-        id: user.id,
+        id: emailExist.id,
       }),
       user,
     };

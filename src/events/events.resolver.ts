@@ -3,14 +3,19 @@ import { EventsService } from './events.service';
 import { Event } from './entities/event.entity';
 import { CreateEventInput } from './dto/create-event.input';
 import { UpdateEventInput } from './dto/update-event.input';
+import { CurrentUser } from '../auth/jwt-auth.guard';
+import { User } from '../users/entities/user.entity';
 
 @Resolver(() => Event)
 export class EventsResolver {
   constructor(private readonly eventsService: EventsService) {}
 
   @Mutation(() => Event)
-  createEvent(@Args('createEventInput') createEventInput: CreateEventInput) {
-    return this.eventsService.create(createEventInput);
+  createEvent(
+    @Args('createEventInput') createEventInput: CreateEventInput,
+    @CurrentUser() user: User,
+  ) {
+    return this.eventsService.create(createEventInput, user.id);
   }
 
   @Query(() => [Event], { name: 'events' })
