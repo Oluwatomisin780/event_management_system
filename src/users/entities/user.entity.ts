@@ -6,9 +6,7 @@ export class User {
   @Field(() => Int)
   id: number;
   @Field()
-  name: string;
-  @Field()
   email: string;
-  @Field()
+  @Field({ nullable: true })
   userType: UserType;
 }

@@ -5,6 +5,9 @@ import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class UsersService {
+  findAll() {
+    return this.primsaService.user.findMany();
+  }
   constructor(private primsaService: PrismaService) {}
   create(createUserInput: CreateUserInput) {
     return this.primsaService.user.create({
