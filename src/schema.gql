@@ -70,11 +70,13 @@ input UpdateEventInput {
 input CreateTicketInput {
   price: Int!
   ticketType: String!
+  eventId: Int!
 }
 
 input UpdateTicketInput {
   price: Int
   ticketType: String
+  eventId: Int
   id: Int!
 }
 

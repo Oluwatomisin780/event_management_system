@@ -4,7 +4,7 @@ import { UpdateEventInput } from './dto/update-event.input';
 import { PrismaService } from '../prisma/prisma.service';
 import e from 'express';
 import { User } from '../users/entities/user.entity';
-import { CurrentUser } from '../auth/jwt-auth.guard';
+import { CurrentUser } from '../auth/guards/jwt-auth.guard';
 @Injectable()
 export class EventsService {
   constructor(private prismaService: PrismaService) {}
@@ -56,5 +56,18 @@ export class EventsService {
         id,
       },
     });
+  }
+
+  //get userId In event
+  async getUserIdByEvent(id: number) {
+    const userId = await this.prismaService.event.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        organizer_id: true,
+      },
+    });
+    return userId.organizer_id;
   }
 }

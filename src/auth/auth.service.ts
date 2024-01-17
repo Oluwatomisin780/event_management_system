@@ -34,6 +34,7 @@ export class AuthService {
       access_token: this.jwtService.sign({
         email: user.email,
         id: emailExist.id,
+        userType: emailExist.userType,
       }),
       user,
     };
