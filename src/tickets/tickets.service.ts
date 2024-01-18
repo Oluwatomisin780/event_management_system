@@ -7,10 +7,12 @@ import { PrismaService } from '../prisma/prisma.service';
 export class TicketsService {
   constructor(private prismaService: PrismaService) {}
   //check if user is oauthorize later
-  create(createTicketInput: CreateTicketInput) {
+
+  create(createTicketInput: CreateTicketInput, userId: number) {
     return this.prismaService.ticket.create({
       data: {
         ...createTicketInput,
+        organizer_id: userId,
       },
     });
   }
@@ -28,7 +30,6 @@ export class TicketsService {
     if (!ticket) throw new NotFoundException('ticket does not exist');
     return ticket;
   }
-
   async update(id: number, updateTicketInput: UpdateTicketInput) {
     const ticket = await this.findOne(id);
     if (!ticket) throw new NotFoundException('ticket does not exist');
@@ -43,7 +44,6 @@ export class TicketsService {
       },
     });
   }
-
   async remove(id: number) {
     const ticket = await this.findOne(id);
     if (!ticket) throw new NotFoundException('ticket does not exist');
@@ -51,5 +51,18 @@ export class TicketsService {
     return this.prismaService.ticket.delete({
       where: { id },
     });
+  }
+  //get userIdbyticket
+
+  async getUserIdByTicket(id: number) {
+    const ticket = await this.prismaService.ticket.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        organizer_id: true,
+      },
+    });
+    return ticket.organizer_id;
   }
 }

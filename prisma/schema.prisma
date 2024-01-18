@@ -21,6 +21,7 @@ model User {
   password String
   userType UserType
   events   Event[]
+  tickets  Ticket[]
 }
 
 model Event {
@@ -40,6 +41,8 @@ model Ticket {
   event      Event      @relation(fields: [eventId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   price      Int
   ticketType TicketType
+  organizer_id Int
+  organizer   User @relation(fields: [organizer_id],references: [id],onDelete: Cascade, onUpdate: Cascade)
 }
 
 enum TicketType {

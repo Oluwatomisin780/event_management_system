@@ -33,7 +33,7 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign({
         email: user.email,
-        id: emailExist.id,
+        sub: emailExist.id,
         userType: emailExist.userType,
       }),
       user,
