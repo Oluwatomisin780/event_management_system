@@ -8,7 +8,7 @@ import { User } from '../users/entities/user.entity';
 import { Roles } from '../auth/decorators/roles.decorators';
 import UserType from '../auth/enums/userRoles.enum';
 import { UnauthorizedException, UseGuards } from '@nestjs/common';
-import { RoleGuard } from '../auth/guards/roles.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
 import { use } from 'passport';
 
 @Resolver(() => Event)
@@ -16,7 +16,7 @@ export class EventsResolver {
   constructor(private readonly eventsService: EventsService) {}
 
   @Mutation(() => Event)
-  @UseGuards(JwtAuthGuard, RoleGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserType.ORGANIZER)
   createEvent(
     @Args('createEventInput') createEventInput: CreateEventInput,
@@ -34,7 +34,7 @@ export class EventsResolver {
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.eventsService.findOne(id);
   }
-  @UseGuards(JwtAuthGuard, RoleGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserType.ORGANIZER)
   @Mutation(() => Event)
   async updateEvent(
@@ -48,7 +48,7 @@ export class EventsResolver {
       throw new UnauthorizedException('User not Authorize');
     return this.eventsService.update(updateEventInput.id, updateEventInput);
   }
-  @UseGuards(JwtAuthGuard, RoleGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserType.ORGANIZER)
   @Mutation(() => Event)
   async removeEvent(

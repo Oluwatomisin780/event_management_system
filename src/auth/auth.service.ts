@@ -34,7 +34,7 @@ export class AuthService {
       access_token: this.jwtService.sign({
         email: user.email,
         sub: emailExist.id,
-        userType: emailExist.userType,
+        userType: emailExist.role,
       }),
       user,
     };
@@ -50,7 +50,7 @@ export class AuthService {
     const password = await bcrypt.hash(createUserInput.password, 12);
     return this.userService.create({
       password: password,
-      userType: createUserInput.userType,
+      role: createUserInput.role,
       email: createUserInput.email,
     });
   }

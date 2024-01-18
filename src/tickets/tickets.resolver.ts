@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { TicketsService } from './tickets.service';
-import UserType from '../auth/enums/userRoles.enum';
+import Role from '../auth/enums/userRoles.enum';
 import { Ticket } from './entities/ticket.entity';
 import { CreateTicketInput } from './dto/create-ticket.input';
 import { UpdateTicketInput } from './dto/update-ticket.input';
@@ -8,7 +8,7 @@ import { UnauthorizedException, UseGuards } from '@nestjs/common';
 
 import { Roles } from '../auth/decorators/roles.decorators';
 import { CurrentUser, JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { RoleGuard } from '../auth/guards/roles.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
 import { User } from '../users/entities/user.entity';
 import { coerceInputValue } from 'graphql';
 
@@ -17,8 +17,8 @@ export class TicketsResolver {
   constructor(private readonly ticketsService: TicketsService) {}
 
   @Mutation(() => Ticket)
-  @UseGuards(JwtAuthGuard, RoleGuard)
-  @Roles(UserType.ORGANIZER)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ORGANIZER)
   createTicket(
     @Args('createTicketInput') createTicketInput: CreateTicketInput,
     @CurrentUser() user: User,
@@ -38,8 +38,8 @@ export class TicketsResolver {
   }
 
   @Mutation(() => Ticket)
-  @UseGuards(JwtAuthGuard, RoleGuard)
-  @Roles(UserType.ORGANIZER)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ORGANIZER)
   async updateTicket(
     @Args('updateTicketInput') updateTicketInput: UpdateTicketInput,
     @CurrentUser() user: User,
@@ -52,8 +52,8 @@ export class TicketsResolver {
   }
 
   @Mutation(() => Ticket)
-  @UseGuards(JwtAuthGuard, RoleGuard)
-  @Roles(UserType.ORGANIZER)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ORGANIZER)
   async removeTicket(
     @Args('id', { type: () => Int }) id: number,
     @CurrentUser() user: User,

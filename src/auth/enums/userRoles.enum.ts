@@ -1,6 +1,6 @@
-enum UserType {
+enum Role {
   ORGANIZER = 'ORGANIZER',
   PARTICIPANT = 'PARTICIPANT',
 }
 
-export default UserType;
+export default Role;
