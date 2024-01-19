@@ -9,7 +9,6 @@ import { Roles } from '../auth/decorators/roles.decorators';
 import UserType from '../auth/enums/userRoles.enum';
 import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { RolesGuard } from '../auth/guards/roles.guard';
-import { use } from 'passport';
 
 @Resolver(() => Event)
 export class EventsResolver {
