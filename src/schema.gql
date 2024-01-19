@@ -62,8 +62,6 @@ input UpdateEventInput {
   name: String!
   description: String!
   location: String!
-
-  """Example field (placeholder)"""
   id: Int!
 }
 
